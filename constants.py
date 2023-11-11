@@ -20,6 +20,10 @@ MOCK_DATETIME = datetime(year=2023,
 SLACK_API_KEY = "CARAVAN_BOT_SLACK_CLIENT"
 MOCK_SLACK_CHANNEL = "#kinghadiofthecaravan-logs"
 
+# OpenWeatherAPI
+GET_WEATHER_ENDPOINT = "http://api.openweathermap.org/data/2.5/weather"
+OPENWEATHER_API_KEY = "OPENWEATHER_API_KEY"
+
 COLORS = {
     "white":    (220, 220, 220),
     "aqua":     (0, 255, 255),

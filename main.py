@@ -1,5 +1,13 @@
 """Main Program"""
+from pprint import pprint
 from functions import *
+
+total_api_calls = 0
+
+validate_environment_variables("weather-station",
+                               [
+                                   OPENWEATHER_API_KEY,
+                               ])
 
 unicornhatmini.set_brightness(SCREEN_BRIGHTNESS)
 
@@ -10,7 +18,7 @@ test_numbers()
 b_is_pressed = False
 a_is_pressed = False
 y_is_pressed = False
-x_is_pressed_hide_screen = False
+x_is_pressed = False
 
 initial_run = True
 error_in_program = False
@@ -55,14 +63,14 @@ def pressed_y():
         y_is_pressed = True
 
 
-def pressed_x_hide_screen():
+def pressed_x():
     """Hide/Show the clock when pressing the X (bottom right) button on the Unicorn Hat Mini"""
-    global x_is_pressed_hide_screen
+    global x_is_pressed
 
-    if x_is_pressed_hide_screen:
-        x_is_pressed_hide_screen = False
+    if x_is_pressed:
+        x_is_pressed = False
     else:
-        x_is_pressed_hide_screen = True
+        x_is_pressed = True
 
 
 while True:
@@ -78,9 +86,9 @@ while True:
     BUTTON_B.when_pressed = pressed_b
     BUTTON_A.when_pressed = pressed_a
     BUTTON_Y.when_pressed = pressed_y
-    BUTTON_X.when_pressed = pressed_x_hide_screen
+    BUTTON_X.when_pressed = pressed_x
 
-    if x_is_pressed_hide_screen:
+    if x_is_pressed:
         a_is_pressed = False
         b_is_pressed = False
         initial_run = True
@@ -91,7 +99,22 @@ while True:
         unicornhatmini.show()
         continue
 
-    test_numbers()
+    raw_request, total_api_calls = api_call_to_json(method="GET",
+                                                    name="Weather Details",
+                                                    url=GET_WEATHER_ENDPOINT,
+                                                    api_calls=total_api_calls,
+                                                    params={
+                                                        "lat": LOCATION_LATITUDE_,
+                                                        "lon": LOCATION_LONGITUDE,
+                                                        "appid": os.environ[OPENWEATHER_API_KEY]
+                                                    })
+
+    if raw_request["result"] == "success":
+        pprint(raw_request["output"])
+
+    else:
+        pprint(raw_request)
+        exit(1)
 
     just_pressed = False
     t = datetime.utcnow()
@@ -100,10 +123,10 @@ while True:
         saved_b = b_is_pressed
         saved_a = a_is_pressed
         saved_y = y_is_pressed
-        saved_x = x_is_pressed_hide_screen
+        saved_x = x_is_pressed
 
         time.sleep(TIME_DELAY)
-        if saved_x != x_is_pressed_hide_screen or saved_y != y_is_pressed \
+        if saved_x != x_is_pressed or saved_y != y_is_pressed \
                 or saved_a != a_is_pressed or saved_b != b_is_pressed:
             just_pressed = True
             break

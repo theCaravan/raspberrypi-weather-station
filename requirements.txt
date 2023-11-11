@@ -1,4 +1,5 @@
-requests==2.31.0
-unicornhatmini~=0.0.2
-gpiozero~=1.6.2
-slack_sdk==3.22.0
+requests
+unicornhatmini
+gpiozero
+slack_sdk
+xmltodict
