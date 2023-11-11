@@ -21,7 +21,7 @@ SLACK_API_KEY = "CARAVAN_BOT_SLACK_CLIENT"
 MOCK_SLACK_CHANNEL = "#kinghadiofthecaravan-logs"
 
 # OpenWeatherAPI
-GET_WEATHER_ENDPOINT = "http://api.openweathermap.org/data/2.5/weather"
+GET_WEATHER_ENDPOINT = "https://api.openweathermap.org/data/3.0/onecall"
 OPENWEATHER_API_KEY = "OPENWEATHER_API_KEY"
 
 COLORS = {

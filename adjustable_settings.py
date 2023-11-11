@@ -8,6 +8,9 @@ LOCATION_LONGITUDE = -93.024759
 # Number set to display
 LANGUAGE = "English"
 
+# metric or imperial
+UNIT_KIND = "imperial"
+
 # Delay between transitions
 TIME_DELAY = 0.05
 

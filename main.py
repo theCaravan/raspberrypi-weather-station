@@ -106,7 +106,8 @@ while True:
                                                     params={
                                                         "lat": LOCATION_LATITUDE_,
                                                         "lon": LOCATION_LONGITUDE,
-                                                        "appid": os.environ[OPENWEATHER_API_KEY]
+                                                        "appid": os.environ[OPENWEATHER_API_KEY],
+                                                        "units": UNIT_KIND,
                                                     })
 
     if raw_request["result"] == "success":
