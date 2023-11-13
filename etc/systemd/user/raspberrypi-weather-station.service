@@ -8,5 +8,3 @@ ExecStart=/usr/bin/python3 /home/ubuntu/github/raspberrypi-weather-station/main.
 
 [Install]
 WantedBy=multi-user.target
-
-# https://blog.debiania.in.ua/posts/2020-11-27-howto-delay-a-systemd-service-until-the-clock-is-synchronized.html
