@@ -119,8 +119,8 @@ while True:
 
         if 0 <= current_feels_like < 100:
             digits = str(current_feels_like)
-            display_number(int(digits[1]), 0, 0)
-            display_number(int(digits[0]), 0, -4)
+            display_number(int(digits[0]), 0, 0)
+            display_number(int(digits[1]), 0, -4)
 
     else:
         pprint(raw_request)
