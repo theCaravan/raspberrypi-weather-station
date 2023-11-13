@@ -20,7 +20,11 @@ Press the lower left button once TBD
 Press the lower right button once TBD
 
 Run this on startup:
-Systemd allows a script to run on startup. In this repository there is a folder /etc/systemd/user. This matches the file structure of where you should place the rasperrypi-weather-station.service file.
+Systemd allows a script to run on startup. In this repository there is a folder /etc/systemd/system. This matches the
+file structure of where you should place the raspberrypi-weather-station.service file.
+
+Additionally, you should create a ".env" file in this directory with your OPENWEATHER_API_KEY value set, like this:
+OPENWEATHER_API_KEY=abcdefghijklmnop
 
 Once you place it, run these commands:
 sudo systemctl enable --now systemd-timesyncd.service
