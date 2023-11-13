@@ -1,0 +1,12 @@
+[Unit]
+Description=Raspberry Pi Weather Service
+After=time-sync.target
+Wants=time-sync.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/ubuntu/github/raspberrypi-weather-station/main.py
+
+[Install]
+WantedBy=multi-user.target
+
+# https://blog.debiania.in.ua/posts/2020-11-27-howto-delay-a-systemd-service-until-the-clock-is-synchronized.html
