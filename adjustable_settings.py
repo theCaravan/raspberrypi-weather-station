@@ -13,6 +13,7 @@ UNIT_KIND = "imperial"
 
 # Delay between transitions
 TIME_DELAY = 0.05
+REFRESH_INTERVAL = 300  # 5 minutes
 
 # Screen brightness
 SCREEN_BRIGHTNESS = 0.05

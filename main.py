@@ -111,7 +111,16 @@ while True:
                                                     })
 
     if raw_request["result"] == "success":
-        pprint(raw_request["output"])
+        weather = raw_request["output"]
+        current_feels_like = weather["current"].get("feels_like")
+
+        # Clear the entire row
+        clear_section(0, 4, 0, 6)
+
+        if 0 <= current_feels_like < 100:
+            digits = str(current_feels_like)
+            display_number(digits[1], 0, 0)
+            display_number(digits[0], 0, -4)
 
     else:
         pprint(raw_request)
@@ -119,7 +128,7 @@ while True:
 
     just_pressed = False
     t = datetime.utcnow()
-    sleep_time = 60 - t.second
+    sleep_time = REFRESH_INTERVAL - t.second
     for i in range(sleep_time * 20):
         saved_b = b_is_pressed
         saved_a = a_is_pressed
