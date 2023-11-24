@@ -117,10 +117,14 @@ while True:
         # Clear the entire row
         clear_section(0, 4, 0, 6)
 
-        if 0 <= current_feels_like < 100:
-            digits = str(current_feels_like)
-            display_number(int(digits[0]), 0, 0)
-            display_number(int(digits[1]), 0, -4)
+        try:
+            if 0 <= current_feels_like < 100:
+                digits = str(current_feels_like)
+                display_number(int(digits[0]), 0, 0)
+                display_number(int(digits[1]), 0, -4)
+
+        except ValueError:
+            print("Error: can't decipher value current_feels_like = {}".format(current_feels_like))
 
     else:
         pprint(raw_request)
