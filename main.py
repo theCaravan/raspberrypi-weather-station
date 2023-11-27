@@ -7,11 +7,11 @@ total_api_calls = 0
 validate_environment_variables("weather-station",
                                [
                                    OPENWEATHER_API_KEY,
-                               ])
+                                   ])
 
 unicornhatmini.set_brightness(SCREEN_BRIGHTNESS)
 
-# Run a display of all the numbers as a welcome greeting and a diagnostic
+# Show all numbers as a welcome greeting and a diagnostic.
 test_numbers()
 
 # Set none of the buttons as pressed
@@ -25,7 +25,7 @@ error_in_program = False
 
 
 def pressed_b():
-    """Run this when pressing the B (upper left) button on the Unicorn Hat Mini"""
+    """Run this when pressing the B (upper left) button on the Unicorn Hat Mini."""
     global b_is_pressed
     global initial_run
 
@@ -40,7 +40,7 @@ def pressed_b():
 
 
 def pressed_a():
-    """Run this when pressing the A (upper right) button on the Unicorn Hat Mini"""
+    """Run this when pressing the A (upper right) button on the Unicorn Hat Mini."""
     global a_is_pressed
     global initial_run
 
@@ -54,7 +54,7 @@ def pressed_a():
 
 
 def pressed_y():
-    """Run this when pressing the Y (bottom left) button on the Unicorn Hat Mini"""
+    """Run this when pressing the Y (bottom left) button on the Unicorn Hat Mini."""
     global y_is_pressed
 
     if y_is_pressed:
@@ -64,7 +64,7 @@ def pressed_y():
 
 
 def pressed_x():
-    """Hide/Show the clock when pressing the X (bottom right) button on the Unicorn Hat Mini"""
+    """Hide/Show the clock when pressing the X (bottom right) button on the Unicorn Hat Mini."""
     global x_is_pressed
 
     if x_is_pressed:
@@ -74,7 +74,7 @@ def pressed_x():
 
 
 while True:
-    # Time values are grabbed here
+    # Time values grabbed here
     if not MOCK_RUN:
         datetime_now = datetime.now()
     else:
@@ -99,16 +99,16 @@ while True:
         unicornhatmini.show()
         continue
 
-    raw_request, total_api_calls = api_call_to_json(method="GET",
-                                                    name="Weather Details",
-                                                    url=GET_WEATHER_ENDPOINT,
-                                                    api_calls=total_api_calls,
-                                                    params={
-                                                        "lat": LOCATION_LATITUDE_,
-                                                        "lon": LOCATION_LONGITUDE,
+    raw_request, total_api_calls = api_call_to_json(method = "GET",
+                                                    name = "Weather Details",
+                                                    url = GET_WEATHER_ENDPOINT,
+                                                    api_calls = total_api_calls,
+                                                    params = {
+                                                        "lat"  : LOCATION_LATITUDE_,
+                                                        "lon"  : LOCATION_LONGITUDE,
                                                         "appid": os.environ[OPENWEATHER_API_KEY],
                                                         "units": UNIT_KIND,
-                                                    })
+                                                        })
 
     if raw_request["result"] == "success":
         weather = raw_request["output"]
@@ -145,8 +145,8 @@ while True:
             just_pressed = True
             break
 
-    # Clear new screen pressed buttons if this wasn't just pressed
-    # Allows a screen to reset to the main on its own at the next minute
+    # Clear new screen pressed buttons if this not just pressed
+    # Allows a screen to reset to the main on its own at the next minute.
     if not just_pressed:
         a_is_pressed = False
         b_is_pressed = False
