@@ -122,18 +122,18 @@ while True:
                 temp_int = round(float(current_feels_like))
 
                 if -100 < temp_int <= -10:
-                    display_number(str(temp_int)[0], 0, 0, rgb = COLORS["red"])
-                    display_number(str(temp_int)[1], 0, -4, rgb = COLORS["red"])
+                    display_number(int(str(temp_int)[0]), 0, 0, rgb = COLORS["red"])
+                    display_number(int(str(temp_int)[1]), 0, -4, rgb = COLORS["red"])
 
                 elif -10 < temp_int < 0:
-                    display_number(str(temp_int)[0], 0, -2, rgb = COLORS["red"])
+                    display_number(int(str(temp_int)[0]), 0, -2, rgb = COLORS["red"])
 
                 elif 0 <= temp_int < 10:
-                    display_number(str(temp_int)[0], 0, -2)
+                    display_number(int(str(temp_int)[0]), 0, -2)
 
                 elif 10 < temp_int < 100:
-                    display_number(str(temp_int)[0], 0, 0)
-                    display_number(str(temp_int)[1], 0, -4)
+                    display_number(int(str(temp_int)[0]), 0, 0)
+                    display_number(int(str(temp_int)[1]), 0, -4)
 
                 else:
                     raise ValueError
