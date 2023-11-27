@@ -14,26 +14,27 @@ from constants import *
 unicornhatmini = UnicornHATMini()
 
 
-def api_call_to_json(method: str, name: str, url: str, api_calls: int, authentication=None, headers=None, params=None,
-                     body=None, mock_run=False) -> [dict, int]:
-    """Runs an API call and returns the result in JSON. If mock_run = True, print the result here instead"""
+def api_call_to_json(method: str, name: str, url: str, api_calls: int, authentication = None, headers = None,
+                     params = None,
+                     body = None, mock_run = False) -> [dict, int]:
+    """Runs an API call and returns the result in JSON. If mock_run = True, print the result here instead."""
     __version__ = "4.2"
 
     input_arguments = {
-        "method": method,
-        "name": name,
-        "url": url,
+        "method"   : method,
+        "name"     : name,
+        "url"      : url,
         "api_calls": api_calls,
-        "headers": headers,
-        "params": params,
-        "body": body,
-        "mock_run": mock_run,
-    }
+        "headers"  : headers,
+        "params"   : params,
+        "body"     : body,
+        "mock_run" : mock_run,
+        }
 
-    # Return a dictionary we'll add onto for the full output
+    # Return a dictionary we will add onto for the full output.
     return_dict = {
         "input_arguments": input_arguments,
-    }
+        }
 
     if not body:
         body = {}
@@ -53,35 +54,35 @@ def api_call_to_json(method: str, name: str, url: str, api_calls: int, authentic
             return return_dict, api_calls
 
         if method == "GET":
-            response = requests.get(url=url,
-                                    auth=authentication,
-                                    headers=headers,
-                                    params=params,
-                                    data=body)
+            response = requests.get(url = url,
+                                    auth = authentication,
+                                    headers = headers,
+                                    params = params,
+                                    data = body)
             api_calls += 1
 
         elif method == "POST":
-            response = requests.post(url=url,
-                                     auth=authentication,
-                                     headers=headers,
-                                     params=params,
-                                     data=body)
+            response = requests.post(url = url,
+                                     auth = authentication,
+                                     headers = headers,
+                                     params = params,
+                                     data = body)
             api_calls += 1
 
         elif method == "PUT":
-            response = requests.put(url=url,
-                                    auth=authentication,
-                                    headers=headers,
-                                    params=params,
-                                    data=body)
+            response = requests.put(url = url,
+                                    auth = authentication,
+                                    headers = headers,
+                                    params = params,
+                                    data = body)
             api_calls += 1
 
         elif method == "DELETE":
-            response = requests.delete(url=url,
-                                       auth=authentication,
-                                       headers=headers,
-                                       params=params,
-                                       data=body)
+            response = requests.delete(url = url,
+                                       auth = authentication,
+                                       headers = headers,
+                                       params = params,
+                                       data = body)
             api_calls += 1
 
         else:
@@ -92,8 +93,8 @@ def api_call_to_json(method: str, name: str, url: str, api_calls: int, authentic
 
         return_dict["status_code"] = response.status_code
 
-        # 204 - No Content
-        # Request succeeded, but nothing returned that would be worth a JSON conversion
+        # 204 – No Content
+        # Request succeeded, but nothing returned that would be worth a JSON conversion.
         if return_dict["status_code"] == 204:
             return_dict["result"] = "success"
             return_dict["wasXML"] = False
@@ -101,8 +102,8 @@ def api_call_to_json(method: str, name: str, url: str, api_calls: int, authentic
             return_dict["api_calls"] = api_calls
             return return_dict, api_calls
 
-        # 429 - Too Many Requests
-        # in the event of a 429, let's call this again after sleeping for the amount specified in the request
+        # 429 – Too Many Requests
+        # if a 429, lets call this again after sleeping for the amount specified in the request.
         if return_dict["status_code"] == 429:
             sleep_seconds = 5
 
@@ -116,7 +117,7 @@ def api_call_to_json(method: str, name: str, url: str, api_calls: int, authentic
             time.sleep(sleep_seconds)
 
             # One of the few times I ever use recursion, a function invoking itself.
-            # Theoretically if we keep getting 429s this can run forever
+            # Theoretically if we keep getting 429s this can run forever.
             return api_call_to_json(method, name, url, api_calls, authentication, headers, body, mock_run)
 
         if return_dict["status_code"] >= 400:
@@ -174,23 +175,23 @@ def api_call_to_json(method: str, name: str, url: str, api_calls: int, authentic
 
 
 def post_to_slack(slack_channel: str, post_text: str,
-                  slack_api_key: str, api_calls: int, mock_run: bool, post_image=None) -> [dict, int]:
-    """Post text or image to Slack. If mock_run = True, print the text or image here instead"""
+                  slack_api_key: str, api_calls: int, mock_run: bool, post_image = None) -> [dict, int]:
+    """Post text or image to Slack. If mock_run = True, print the text or image here instead."""
     __version__ = "3.0"
 
     input_arguments = {
         "slack_channel": slack_channel,
-        "post_text": post_text,
+        "post_text"    : post_text,
         "slack_api_key": "[REDACTED]",
-        "api_calls": api_calls,
-        "mock_run": mock_run,
-        "post_image": post_image,
-    }
+        "api_calls"    : api_calls,
+        "mock_run"     : mock_run,
+        "post_image"   : post_image,
+        }
 
     validate_environment_variables("post_to_slack",
                                    [
                                        slack_api_key,
-                                   ])
+                                       ])
 
     try:
         if post_image:
@@ -200,33 +201,33 @@ def post_to_slack(slack_channel: str, post_text: str,
                 print("[Image goes here. It's been saved locally]")
                 print("--- ---")
                 return {
-                    "result": "success",
-                    "api_calls": api_calls,
+                    "result"         : "success",
+                    "api_calls"      : api_calls,
                     "input_arguments": input_arguments
-                }, api_calls
+                    }, api_calls
 
             # client.files_upload() has a warning
             # UserWarning: client.files_upload() may cause some issues like timeouts for relatively large files.
-            # Our latest recommendation is to use client.files_upload_v2(), which is mostly compatible and much stabler,
+            # Our latest recommendation is to use client.files_upload_v2(), mostly compatible and much stabler,
             # instead.
             #
-            # I couldn't get client.files_upload_v2() to work, so instead we suppress the warnings for it
+            # I couldn't get client.files_upload_v2() to work, so instead we suppress the warnings for it.
 
             client = slack_sdk.WebClient(os.environ[slack_api_key])
 
             with warnings.catch_warnings():
                 warnings.filterwarnings("ignore")
-                response = client.files_upload(channels=[slack_channel],
-                                               initial_comment=post_text,
-                                               file=post_image)
+                response = client.files_upload(channels = [slack_channel],
+                                               initial_comment = post_text,
+                                               file = post_image)
                 api_calls += 1
 
             return {
-                "result": "success",
-                "output": response,
-                "api_calls": api_calls,
+                "result"         : "success",
+                "output"         : response,
+                "api_calls"      : api_calls,
                 "input_arguments": input_arguments,
-            }, api_calls
+                }, api_calls
 
         else:
             if mock_run:
@@ -234,36 +235,36 @@ def post_to_slack(slack_channel: str, post_text: str,
                 print(post_text)
                 print("--- post_to_slack: End ---")
                 return {
-                    "result": "success",
-                    "api_calls": api_calls,
+                    "result"         : "success",
+                    "api_calls"      : api_calls,
                     "input_arguments": input_arguments
-                }, api_calls
+                    }, api_calls
 
             client = slack_sdk.WebClient(os.environ[slack_api_key])
-            response = client.chat_postMessage(channel=slack_channel,
-                                               text=post_text)
+            response = client.chat_postMessage(channel = slack_channel,
+                                               text = post_text)
             api_calls += 1
 
             return {
-                "result": "success",
-                "output": response,
-                "api_calls": api_calls,
+                "result"         : "success",
+                "output"         : response,
+                "api_calls"      : api_calls,
                 "input_arguments": input_arguments,
-            }, api_calls
+                }, api_calls
 
     except Exception as e:
         print(repr(e))
         traceback.print_exc()
         return {
-            "result": "error",
-            "error": "catchall_failure",
-            "api_calls": api_calls,
+            "result"         : "error",
+            "error"          : "catchall_failure",
+            "api_calls"      : api_calls,
             "input_arguments": input_arguments,
-        }, api_calls
+            }, api_calls
 
 
 def validate_environment_variables(module: str, required_environment_variables_list: list) -> None:
-    """Verify the needed environment variables are active, otherwise exist with error"""
+    """Verify the needed environment variables are active, otherwise exist with error."""
     __version__ = "1.0"
 
     if not required_environment_variables_list:
@@ -279,7 +280,7 @@ def validate_environment_variables(module: str, required_environment_variables_l
 
 
 def clear_section(start_x, end_x, start_y, end_y):
-    """Clear a section of pixels, such as when changing the number or an entire line for a new hour"""
+    """Clear a section of pixels, such as when changing the number or an entire line for a new hour."""
     this_x = start_x
 
     if start_x > end_x:
@@ -299,7 +300,7 @@ def clear_section(start_x, end_x, start_y, end_y):
     unicornhatmini.show()
 
 
-def display_number(number, x_offset, y_offset, clear=False, rgb=None, test=False):
+def display_number(number, x_offset, y_offset, clear = False, rgb = None, test = False):
     """Display a single number"""
     if rgb is None:
         rgb = COLORS["white"]
@@ -314,7 +315,7 @@ def display_number(number, x_offset, y_offset, clear=False, rgb=None, test=False
     for pixel in NUMBERS_TO_DRAW[number]:
         unicornhatmini.set_pixel(pixel[0] + x_offset, pixel[1] + y_offset, red, green, blue)
 
-        # Show the same number 6 times to ensure the display is working on test mode
+        # Show the same number 6 times to ensure the display is working on the test mode.
         if test:
             unicornhatmini.set_pixel(pixel[0] + x_offset + 6, pixel[1] + y_offset, red, green, blue)
             unicornhatmini.set_pixel(pixel[0] + x_offset - 5, pixel[1] + y_offset, red, green, blue)
@@ -327,10 +328,10 @@ def display_number(number, x_offset, y_offset, clear=False, rgb=None, test=False
 
 
 def test_numbers():
-    """Initial run of the clock to show you the numbers and to verify it all works"""
+    """Initial run of the clock to show you the numbers and to verify it all works."""
     current_number = 9
     while current_number >= 0:
-        display_number(current_number, 0, 0, test=True)
+        display_number(current_number, 0, 0, test = True)
         time.sleep(TIME_DELAY * 2)
         current_number -= 1
     unicornhatmini.clear()

@@ -119,18 +119,29 @@ while True:
 
         try:
             if 0 <= current_feels_like < 100:
-                digits = str(current_feels_like)
+                temp_int = round(float(current_feels_like))
 
-                print(len(digits))
+                if -100 < temp_int <= -10:
+                    display_number(str(temp_int)[0], 0, 0, rgb = COLORS["red"])
+                    display_number(str(temp_int)[1], 0, -4, rgb = COLORS["red"])
 
-                if len(digits) == 1:
-                    display_number(int(digits[1]), 0, -2)
+                elif -10 < temp_int < 0:
+                    display_number(str(temp_int)[0], 0, -2, rgb = COLORS["red"])
+
+                elif 0 <= temp_int < 10:
+                    display_number(str(temp_int)[0], 0, -2)
+
+                elif 10 < temp_int < 100:
+                    display_number(str(temp_int)[0], 0, 0)
+                    display_number(str(temp_int)[1], 0, -4)
+
                 else:
-                    display_number(int(digits[0]), 0, 0)
-                    display_number(int(digits[1]), 0, -4)
+                    raise ValueError
 
         except (ValueError, IndexError):
             print("Error: can't decipher value current_feels_like = {}".format(current_feels_like))
+            display_number(0, 0, 0, rgb = COLORS["red"])
+            display_number(0, 0, -4, rgb = COLORS["red"])
 
     else:
         pprint(raw_request)
