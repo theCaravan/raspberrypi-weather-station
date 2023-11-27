@@ -123,7 +123,7 @@ while True:
                 display_number(int(digits[0]), 0, 0)
                 display_number(int(digits[1]), 0, -4)
 
-        except ValueError:
+        except (ValueError, IndexError):
             print("Error: can't decipher value current_feels_like = {}".format(current_feels_like))
 
     else:
