@@ -120,8 +120,12 @@ while True:
         try:
             if 0 <= current_feels_like < 100:
                 digits = str(current_feels_like)
-                display_number(int(digits[0]), 0, 0)
-                display_number(int(digits[1]), 0, -4)
+
+                if len(digits) == 1:
+                    display_number(int(digits[1]), 0, -2)
+                else:
+                    display_number(int(digits[0]), 0, 0)
+                    display_number(int(digits[1]), 0, -4)
 
         except (ValueError, IndexError):
             print("Error: can't decipher value current_feels_like = {}".format(current_feels_like))
