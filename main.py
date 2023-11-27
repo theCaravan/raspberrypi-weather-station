@@ -121,6 +121,8 @@ while True:
             if 0 <= current_feels_like < 100:
                 digits = str(current_feels_like)
 
+                print(len(digits))
+
                 if len(digits) == 1:
                     display_number(int(digits[1]), 0, -2)
                 else:
