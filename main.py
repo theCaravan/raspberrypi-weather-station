@@ -8,8 +8,11 @@ validate_environment_variables("weather-station",
                                [
                                    OPENWEATHER_API_KEY,
                                    ])
+try:
+    unicornhatmini.set_brightness(SCREEN_BRIGHTNESS)
+except AttributeError:
+    unicornhatmini.brightness(SCREEN_BRIGHTNESS)
 
-unicornhatmini.set_brightness(SCREEN_BRIGHTNESS)
 
 # Show all numbers as a welcome greeting and a diagnostic.
 test_numbers()

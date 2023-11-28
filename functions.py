@@ -7,11 +7,23 @@ import traceback
 import requests
 import slack_sdk
 import xmltodict
-from unicornhatmini import UnicornHATMini
-from constants import *
 
-# Initialize Unicorn Hat Mini
-unicornhatmini = UnicornHATMini()
+# Initialize Unicorn Hat Mini.
+try:
+    from unicornhatmini import UnicornHATMini as unicornHat
+
+    unicornhatmini = unicornHat()
+
+# Mock Unicorn Hat Mini in the event it is run on a local device.
+except ImportError:
+    os.environ['GPIOZERO_PIN_FACTORY'] = os.environ.get('GPIOZERO_PIN_FACTORY', 'mock')
+    import gpiozero
+    from unicorn_hat_sim import unicornhathd as unicornHat
+
+    unicornhatmini = unicornHat
+
+
+from constants import *
 
 
 def api_call_to_json(method: str, name: str, url: str, api_calls: int, authentication = None, headers = None,
