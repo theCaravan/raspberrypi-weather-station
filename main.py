@@ -13,7 +13,6 @@ try:
 except AttributeError:
     unicornhatmini.brightness(SCREEN_BRIGHTNESS)
 
-
 # Show all numbers as a welcome greeting and a diagnostic.
 test_numbers()
 
@@ -121,25 +120,24 @@ while True:
         clear_section(0, 4, 0, 6)
 
         try:
-            if 0 <= current_feels_like < 100:
-                temp_int = round(float(current_feels_like))
+            temp_int = round(float(current_feels_like))
 
-                if -100 < temp_int <= -10:
-                    display_number(int(str(temp_int)[0]), 0, 0, rgb = COLORS["red"])
-                    display_number(int(str(temp_int)[1]), 0, -4, rgb = COLORS["red"])
+            if -100 < temp_int <= -10:
+                display_number(int(str(temp_int)[1]), 0, 0, rgb = COLORS["red"])
+                display_number(int(str(temp_int)[2]), 0, -4, rgb = COLORS["red"])
 
-                elif -10 < temp_int < 0:
-                    display_number(int(str(temp_int)[0]), 0, -2, rgb = COLORS["red"])
+            elif -10 < temp_int < 0:
+                display_number(int(str(temp_int)) * -1, 0, -2, rgb = COLORS["red"])
 
-                elif 0 <= temp_int < 10:
-                    display_number(int(str(temp_int)[0]), 0, -2)
+            elif 0 <= temp_int < 10:
+                display_number(int(str(temp_int)[0]), 0, -2)
 
-                elif 10 < temp_int < 100:
-                    display_number(int(str(temp_int)[0]), 0, 0)
-                    display_number(int(str(temp_int)[1]), 0, -4)
+            elif 10 < temp_int < 100:
+                display_number(int(str(temp_int)[0]), 0, 0)
+                display_number(int(str(temp_int)[1]), 0, -4)
 
-                else:
-                    raise ValueError
+            else:
+                raise ValueError
 
         except (ValueError, IndexError):
             print("Error: can't decipher value current_feels_like = {}".format(current_feels_like))
