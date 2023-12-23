@@ -1,5 +1,5 @@
 """Define the adjustable settings used in this project"""
-# These are meant to be modified by you. These are the default values, but feel free to change them to your liking
+# These are meant to be modified by you. These are the default values, but feel free to change them to your liking.
 
 # Set the GPS coordinates for your location
 LOCATION_LATITUDE_ = 45.031553

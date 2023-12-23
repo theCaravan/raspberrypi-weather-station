@@ -6,8 +6,9 @@ total_api_calls = 0
 
 validate_environment_variables("weather-station",
                                [
-                                   OPENWEATHER_API_KEY,
-                                   ])
+                                       OPENWEATHER_API_KEY,
+                                       ]
+                               )
 try:
     unicornhatmini.set_brightness(SCREEN_BRIGHTNESS)
 except AttributeError:
@@ -26,7 +27,7 @@ initial_run = True
 error_in_program = False
 
 
-def pressed_b():
+def pressed_b() -> None:
     """Run this when pressing the B (upper left) button on the Unicorn Hat Mini."""
     global b_is_pressed
     global initial_run
@@ -41,7 +42,7 @@ def pressed_b():
         b_is_pressed = True
 
 
-def pressed_a():
+def pressed_a() -> None:
     """Run this when pressing the A (upper right) button on the Unicorn Hat Mini."""
     global a_is_pressed
     global initial_run
@@ -55,7 +56,7 @@ def pressed_a():
         a_is_pressed = True
 
 
-def pressed_y():
+def pressed_y() -> None:
     """Run this when pressing the Y (bottom left) button on the Unicorn Hat Mini."""
     global y_is_pressed
 
@@ -65,7 +66,7 @@ def pressed_y():
         y_is_pressed = True
 
 
-def pressed_x():
+def pressed_x() -> None:
     """Hide/Show the clock when pressing the X (bottom right) button on the Unicorn Hat Mini."""
     global x_is_pressed
 
@@ -106,11 +107,12 @@ while True:
                                                     url = GET_WEATHER_ENDPOINT,
                                                     api_calls = total_api_calls,
                                                     params = {
-                                                        "lat"  : LOCATION_LATITUDE_,
-                                                        "lon"  : LOCATION_LONGITUDE,
-                                                        "appid": os.environ[OPENWEATHER_API_KEY],
-                                                        "units": UNIT_KIND,
-                                                        })
+                                                            "lat"  : LOCATION_LATITUDE_,
+                                                            "lon"  : LOCATION_LONGITUDE,
+                                                            "appid": os.environ[OPENWEATHER_API_KEY],
+                                                            "units": UNIT_KIND,
+                                                            }
+                                                    )
 
     if raw_request["result"] == "success":
         weather = raw_request["output"]
