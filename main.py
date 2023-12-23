@@ -117,10 +117,12 @@ while True:
     if raw_request["result"] == "success":
         weather = raw_request["output"]
         current_feels_like = weather["current"].get("feels_like")
+        expected_feels_like = weather["hourly"][6].get("feels_like")
 
         # Clear the entire row
         clear_section(0, 4, 0, 6)
 
+        # Display current temperature on top row
         try:
             temp_int = round(float(current_feels_like))
 
@@ -137,6 +139,32 @@ while True:
             elif 10 < temp_int < 100:
                 display_number(int(str(temp_int)[0]), 0, 0)
                 display_number(int(str(temp_int)[1]), 0, -4)
+
+            else:
+                raise ValueError
+
+        except (ValueError, IndexError):
+            print("Error: can't decipher value current_feels_like = {}".format(current_feels_like))
+            display_number(0, 0, 0, rgb = COLORS["red"])
+            display_number(0, 0, -4, rgb = COLORS["red"])
+
+        # Display expected temperature on 2nd row
+        try:
+            temp_int = round(float(expected_feels_like))
+
+            if -100 < temp_int <= -10:
+                display_number(int(str(temp_int)[1]), 6, 0, rgb = COLORS["red"])
+                display_number(int(str(temp_int)[2]), 6, -4, rgb = COLORS["red"])
+
+            elif -10 < temp_int < 0:
+                display_number(int(str(temp_int)) * -1, 6, -2, rgb = COLORS["red"])
+
+            elif 0 <= temp_int < 10:
+                display_number(int(str(temp_int)[0]), 6, -2)
+
+            elif 10 < temp_int < 100:
+                display_number(int(str(temp_int)[0]), 6, 0)
+                display_number(int(str(temp_int)[1]), 6, -4)
 
             else:
                 raise ValueError
