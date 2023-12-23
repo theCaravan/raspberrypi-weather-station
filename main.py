@@ -190,8 +190,8 @@ while True:
                 display_number(int(str(temp_int)[0]), 12, -2)
 
             elif 10 < temp_int < 100:
-                display_number(int(str(temp_int)[0]), 6, 0)
-                display_number(int(str(temp_int)[1]), 6, -4)
+                display_number(int(str(temp_int)[0]), 12, 0)
+                display_number(int(str(temp_int)[1]), 12, -4)
 
             else:
                 raise ValueError
