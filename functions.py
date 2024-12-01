@@ -8,6 +8,8 @@ import requests
 import slack_sdk
 import xmltodict
 
+from adjustable_settings import TIME_DELAY
+
 # Initialize Unicorn Hat Mini.
 try:
     from unicornhatmini import UnicornHATMini as unicornHat
@@ -25,27 +27,27 @@ except ImportError:
 from constants import *
 
 
-def api_call_to_json(method: str, name: str, url: str, api_calls: int, authentication = None, headers = None,
-                     params = None,
-                     body = None, mock_run = False) -> [dict, int]:
+def api_call_to_json(method: str, name: str, url: str, api_calls: int, authentication=None, headers=None,
+                     params=None,
+                     body=None, mock_run=False) -> [dict, int]:
     """Runs an API call and returns the result in JSON. If mock_run = True, print the result here instead."""
     __version__ = "4.2"
 
     input_arguments = {
-            "method"   : method,
-            "name"     : name,
-            "url"      : url,
-            "api_calls": api_calls,
-            "headers"  : headers,
-            "params"   : params,
-            "body"     : body,
-            "mock_run" : mock_run,
-            }
+        "method"   : method,
+        "name"     : name,
+        "url"      : url,
+        "api_calls": api_calls,
+        "headers"  : headers,
+        "params"   : params,
+        "body"     : body,
+        "mock_run" : mock_run,
+    }
 
     # Return a dictionary we will add onto for the full output.
     return_dict = {
-            "input_arguments": input_arguments,
-            }
+        "input_arguments": input_arguments,
+    }
 
     if not body:
         body = {}
@@ -65,38 +67,38 @@ def api_call_to_json(method: str, name: str, url: str, api_calls: int, authentic
             return return_dict, api_calls
 
         if method == "GET":
-            response = requests.get(url = url,
-                                    auth = authentication,
-                                    headers = headers,
-                                    params = params,
-                                    data = body
+            response = requests.get(url=url,
+                                    auth=authentication,
+                                    headers=headers,
+                                    params=params,
+                                    data=body
                                     )
             api_calls += 1
 
         elif method == "POST":
-            response = requests.post(url = url,
-                                     auth = authentication,
-                                     headers = headers,
-                                     params = params,
-                                     data = body
+            response = requests.post(url=url,
+                                     auth=authentication,
+                                     headers=headers,
+                                     params=params,
+                                     data=body
                                      )
             api_calls += 1
 
         elif method == "PUT":
-            response = requests.put(url = url,
-                                    auth = authentication,
-                                    headers = headers,
-                                    params = params,
-                                    data = body
+            response = requests.put(url=url,
+                                    auth=authentication,
+                                    headers=headers,
+                                    params=params,
+                                    data=body
                                     )
             api_calls += 1
 
         elif method == "DELETE":
-            response = requests.delete(url = url,
-                                       auth = authentication,
-                                       headers = headers,
-                                       params = params,
-                                       data = body
+            response = requests.delete(url=url,
+                                       auth=authentication,
+                                       headers=headers,
+                                       params=params,
+                                       data=body
                                        )
             api_calls += 1
 
@@ -191,23 +193,23 @@ def api_call_to_json(method: str, name: str, url: str, api_calls: int, authentic
 
 
 def post_to_slack(slack_channel: str, post_text: str,
-                  slack_api_key: str, api_calls: int, mock_run: bool, post_image = None) -> [dict, int]:
+                  slack_api_key: str, api_calls: int, mock_run: bool, post_image=None) -> [dict, int]:
     """Post text or image to Slack. If mock_run = True, print the text or image here instead."""
     __version__ = "3.0"
 
     input_arguments = {
-            "slack_channel": slack_channel,
-            "post_text"    : post_text,
-            "slack_api_key": "[REDACTED]",
-            "api_calls"    : api_calls,
-            "mock_run"     : mock_run,
-            "post_image"   : post_image,
-            }
+        "slack_channel": slack_channel,
+        "post_text"    : post_text,
+        "slack_api_key": "[REDACTED]",
+        "api_calls"    : api_calls,
+        "mock_run"     : mock_run,
+        "post_image"   : post_image,
+    }
 
     validate_environment_variables("post_to_slack",
                                    [
-                                           slack_api_key,
-                                           ]
+                                       slack_api_key,
+                                   ]
                                    )
 
     try:
@@ -218,10 +220,10 @@ def post_to_slack(slack_channel: str, post_text: str,
                 print("[Image goes here. It's been saved locally]")
                 print("--- ---")
                 return {
-                        "result"         : "success",
-                        "api_calls"      : api_calls,
-                        "input_arguments": input_arguments
-                        }, api_calls
+                    "result"         : "success",
+                    "api_calls"      : api_calls,
+                    "input_arguments": input_arguments
+                }, api_calls
 
             # client.files_upload() has a warning
             # UserWarning: client.files_upload() may cause some issues like timeouts for relatively large files.
@@ -234,18 +236,18 @@ def post_to_slack(slack_channel: str, post_text: str,
 
             with warnings.catch_warnings():
                 warnings.filterwarnings("ignore")
-                response = client.files_upload(channels = [slack_channel],
-                                               initial_comment = post_text,
-                                               file = post_image
+                response = client.files_upload(channels=[slack_channel],
+                                               initial_comment=post_text,
+                                               file=post_image
                                                )
                 api_calls += 1
 
             return {
-                    "result"         : "success",
-                    "output"         : response,
-                    "api_calls"      : api_calls,
-                    "input_arguments": input_arguments,
-                    }, api_calls
+                "result"         : "success",
+                "output"         : response,
+                "api_calls"      : api_calls,
+                "input_arguments": input_arguments,
+            }, api_calls
 
         else:
             if mock_run:
@@ -253,33 +255,33 @@ def post_to_slack(slack_channel: str, post_text: str,
                 print(post_text)
                 print("--- post_to_slack: End ---")
                 return {
-                        "result"         : "success",
-                        "api_calls"      : api_calls,
-                        "input_arguments": input_arguments
-                        }, api_calls
+                    "result"         : "success",
+                    "api_calls"      : api_calls,
+                    "input_arguments": input_arguments
+                }, api_calls
 
             client = slack_sdk.WebClient(os.environ[slack_api_key])
-            response = client.chat_postMessage(channel = slack_channel,
-                                               text = post_text
+            response = client.chat_postMessage(channel=slack_channel,
+                                               text=post_text
                                                )
             api_calls += 1
 
             return {
-                    "result"         : "success",
-                    "output"         : response,
-                    "api_calls"      : api_calls,
-                    "input_arguments": input_arguments,
-                    }, api_calls
+                "result"         : "success",
+                "output"         : response,
+                "api_calls"      : api_calls,
+                "input_arguments": input_arguments,
+            }, api_calls
 
     except Exception as e:
         print(repr(e))
         traceback.print_exc()
         return {
-                "result"         : "error",
-                "error"          : "catchall_failure",
-                "api_calls"      : api_calls,
-                "input_arguments": input_arguments,
-                }, api_calls
+            "result"         : "error",
+            "error"          : "catchall_failure",
+            "api_calls"      : api_calls,
+            "input_arguments": input_arguments,
+        }, api_calls
 
 
 def validate_environment_variables(module: str, required_environment_variables_list: list) -> None:
@@ -337,15 +339,22 @@ def display_number(number: int,
     blue = rgb[2]
 
     for pixel in NUMBERS_TO_DRAW[number]:
-        unicornhatmini.set_pixel(pixel[0] + x_offset, pixel[1] + y_offset, red, green, blue)
+        x = pixel[0] + x_offset
+        y = pixel[1] + y_offset
+
+        if abs(x) >= MAX_NUMBER or abs(y) >= MAX_NUMBER:
+            print(f"Max value reached: ({x},{y})")
+            return
+
+        unicornhatmini.set_pixel(x, y, red, green, blue)
 
         # Show the same number 6 times to ensure the display is working on the test mode.
         if test:
-            unicornhatmini.set_pixel(pixel[0] + x_offset + 6, pixel[1] + y_offset, red, green, blue)
-            unicornhatmini.set_pixel(pixel[0] + x_offset - 5, pixel[1] + y_offset, red, green, blue)
-            unicornhatmini.set_pixel(pixel[0] + x_offset, pixel[1] + y_offset - 4, red, green, blue)
-            unicornhatmini.set_pixel(pixel[0] + x_offset + 6, pixel[1] + y_offset - 4, red, green, blue)
-            unicornhatmini.set_pixel(pixel[0] + x_offset - 5, pixel[1] + y_offset - 4, red, green, blue)
+            unicornhatmini.set_pixel(x + 6, y, red, green, blue)
+            unicornhatmini.set_pixel(x - 5, y, red, green, blue)
+            unicornhatmini.set_pixel(x, y - 4, red, green, blue)
+            unicornhatmini.set_pixel(x + 6, y - 4, red, green, blue)
+            unicornhatmini.set_pixel(x - 5, y - 4, red, green, blue)
 
         unicornhatmini.show()
         time.sleep(TIME_DELAY)
@@ -355,7 +364,7 @@ def test_numbers() -> None:
     """Initial run of the clock to show you the numbers and to verify it all works."""
     current_number = 9
     while current_number >= 0:
-        display_number(current_number, 0, 0, test = True)
+        display_number(current_number, 0, 0, test=True)
         time.sleep(TIME_DELAY * 2)
         current_number -= 1
     unicornhatmini.clear()
