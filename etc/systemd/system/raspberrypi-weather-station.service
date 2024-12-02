@@ -4,7 +4,7 @@ After=time-sync.target
 Wants=time-sync.target
 
 [Service]
-EnvironmentFile=/home/ubuntu/github/raspberrypi-weather-station/.env
+EnvironmentFile=/home/ubuntu/.env
 ExecStart=/usr/bin/python3 /home/ubuntu/github/raspberrypi-weather-station/main.py
 
 [Install]
