@@ -15,16 +15,16 @@ GET_WEATHER_ENDPOINT = "https://api.openweathermap.org/data/3.0/onecall"
 OPENWEATHER_API_KEY = "OPENWEATHER_API_KEY"
 
 COLORS = {
-    "white": (220, 220, 220),
-    "aqua": (0, 255, 255),
-    "lime": (0, 255, 0),
-    "yellow": (255, 255, 0),
-    "orange": (255, 69, 0),
-    "red": (255, 0, 0),
+    "white"  : (220, 220, 220),
+    "aqua"   : (0, 255, 255),
+    "lime"   : (0, 255, 0),
+    "yellow" : (255, 255, 0),
+    "orange" : (255, 69, 0),
+    "red"    : (255, 0, 0),
     "fuchsia": (255, 0, 255),
-}
+    }
 
-MAX_NUMBER = 16
+MAX_NUMBER = 17
 
 # Unicorn Hat Mini Button Mappings
 #
@@ -62,7 +62,7 @@ if LANGUAGE == "English":
             (3, 6),
             (2, 6),
             (1, 6),
-        ),
+            ),
 
         1: (
             (1, 6),  # |   *   |
@@ -73,7 +73,7 @@ if LANGUAGE == "English":
             (4, 5),
             (4, 6),
             (4, 4),
-        ),
+            ),
 
         2: (
             (0, 6),  # | * * * |
@@ -87,7 +87,7 @@ if LANGUAGE == "English":
             (4, 6),
             (4, 5),
             (4, 4),
-        ),
+            ),
 
         3: (
             (0, 6),  # | * * * |
@@ -101,7 +101,7 @@ if LANGUAGE == "English":
             (4, 4),
             (4, 5),
             (4, 6),
-        ),
+            ),
 
         4: (
             (0, 6),  # | *   * |
@@ -113,7 +113,7 @@ if LANGUAGE == "English":
             (2, 4),
             (3, 4),
             (4, 4),
-        ),
+            ),
 
         5: (
             (0, 4),  # | * * * |
@@ -127,7 +127,7 @@ if LANGUAGE == "English":
             (4, 4),
             (4, 5),
             (4, 6),
-        ),
+            ),
 
         6: (
             (0, 4),  # | * * * |
@@ -142,7 +142,7 @@ if LANGUAGE == "English":
             (3, 4),
             (2, 4),
             (2, 5),
-        ),
+            ),
 
         7: (
             (0, 6),  # | * * * |
@@ -152,7 +152,7 @@ if LANGUAGE == "English":
             (2, 4),  # |     * |
             (3, 4),
             (4, 4),
-        ),
+            ),
 
         8: (
             (1, 6),  # | * * * |
@@ -168,7 +168,7 @@ if LANGUAGE == "English":
             (4, 5),
             (4, 4),
             (3, 4),
-        ),
+            ),
 
         9: (
             (2, 5),  # | * * * |
@@ -183,14 +183,14 @@ if LANGUAGE == "English":
             (4, 4),
             (4, 5),
             (4, 6),
-        )
-    }
+            )
+        }
 
 elif LANGUAGE == "Arabic":
     NUMBERS_TO_DRAW = {
-        0: (         # |       |
-            (4, 5),  # |       |
-        ),           # |   *   |
+        0: (
+            (4, 5),  # |   *   |
+            ),
 
         1: (
             (0, 5),  # |   *   |
@@ -198,7 +198,7 @@ elif LANGUAGE == "Arabic":
             (2, 4),  # |   *   |
             (3, 4),  # |   *   |
             (4, 4),  # |   *   |
-        ),
+            ),
 
         2: (
             (0, 4),  # |   * * |
@@ -207,7 +207,7 @@ elif LANGUAGE == "Arabic":
             (2, 6),  # |   *   |
             (3, 5),  # |     * |
             (4, 4),
-        ),
+            ),
 
         3: (
             (0, 4),  # | *   *  |
@@ -218,7 +218,7 @@ elif LANGUAGE == "Arabic":
             (2, 6),
             (3, 6),
             (4, 6),
-        ),
+            ),
 
         4: (
             (0, 4),  # |   * * |
@@ -229,7 +229,7 @@ elif LANGUAGE == "Arabic":
             (3, 6),
             (4, 5),
             (4, 4),
-        ),
+            ),
 
         5: (
             (3, 6),  # |       |
@@ -240,7 +240,7 @@ elif LANGUAGE == "Arabic":
             (4, 4),
             (4, 5),
             (4, 6),
-        ),
+            ),
 
         6: (
             (0, 6),  # | * * * |
@@ -250,7 +250,7 @@ elif LANGUAGE == "Arabic":
             (2, 4),  # |     * |
             (3, 4),
             (4, 4),
-        ),
+            ),
 
         7: (
             (0, 6),  # | *   * |
@@ -262,7 +262,7 @@ elif LANGUAGE == "Arabic":
             (2, 4),
             (1, 4),
             (0, 4),
-        ),
+            ),
 
         8: (
             (4, 6),  # |   *   |
@@ -274,7 +274,7 @@ elif LANGUAGE == "Arabic":
             (2, 4),
             (3, 4),
             (4, 4),
-        ),
+            ),
 
         9: (
             (0, 4),  # | * * * |
@@ -287,8 +287,8 @@ elif LANGUAGE == "Arabic":
             (2, 4),
             (3, 4),
             (4, 4),
-        )
-    }
+            )
+        }
 
 else:
     print(f"constants: Invalid or unsupported language value '{LANGUAGE}'")

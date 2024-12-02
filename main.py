@@ -1,13 +1,35 @@
 """Main Program"""
+import os
+import time
 from pprint import pprint
-from functions import *
+
+from adjustable_settings import (SCREEN_BRIGHTNESS,
+                                 LOCATION_LATITUDE_,
+                                 UNIT_KIND,
+                                 LOCATION_LONGITUDE,
+                                 REFRESH_INTERVAL, TIME_DELAY)
+
+from datetime import datetime
+import pytz
+
+from constants import (OPENWEATHER_API_KEY,
+                       BUTTON_B,
+                       BUTTON_A,
+                       BUTTON_Y,
+                       BUTTON_X,
+                       GET_WEATHER_ENDPOINT, COLORS)
+from functions import (validate_environment_variables,
+                       test_numbers,
+                       unicornhatmini,
+                       api_call_to_json,
+                       display_number, clear_section)
 
 total_api_calls = 0
 
 validate_environment_variables("weather-station",
                                [
-                                       OPENWEATHER_API_KEY,
-                                       ]
+                                   OPENWEATHER_API_KEY,
+                                   ]
                                )
 try:
     unicornhatmini.set_brightness(SCREEN_BRIGHTNESS)
@@ -77,11 +99,7 @@ def pressed_x() -> None:
 
 
 while True:
-    # Time values grabbed here
-    if not MOCK_RUN:
-        datetime_now = datetime.now()
-    else:
-        datetime_now = MOCK_DATETIME
+    datetime_now = datetime.now()
 
     current_unix_time = int(time.mktime(datetime_now.timetuple()))
     today_date_str = datetime_now.strftime("%d/%m/%Y")
@@ -107,11 +125,11 @@ while True:
                                                     url = GET_WEATHER_ENDPOINT,
                                                     api_calls = total_api_calls,
                                                     params = {
-                                                            "lat"  : LOCATION_LATITUDE_,
-                                                            "lon"  : LOCATION_LONGITUDE,
-                                                            "appid": os.environ[OPENWEATHER_API_KEY],
-                                                            "units": UNIT_KIND,
-                                                            }
+                                                        "lat"  : LOCATION_LATITUDE_,
+                                                        "lon"  : LOCATION_LONGITUDE,
+                                                        "appid": os.environ[OPENWEATHER_API_KEY],
+                                                        "units": UNIT_KIND,
+                                                        }
                                                     )
 
     if raw_request["result"] == "success":
@@ -145,7 +163,7 @@ while True:
                 raise ValueError
 
         except (ValueError, IndexError):
-            print("Error: can't decipher value current_feels_like = {}".format(current_feels_like))
+            print(f"Error: can't decipher value current_feels_like = {current_feels_like}")
             display_number(0, 0, 0, rgb = COLORS["red"])
             display_number(0, 0, -4, rgb = COLORS["red"])
 
@@ -171,7 +189,7 @@ while True:
                 raise ValueError
 
         except (ValueError, IndexError):
-            print("Error: can't decipher value expected_feels_like = {}".format(expected_feels_like))
+            print(f"Error: can't decipher value expected_feels_like = {expected_feels_like}")
             display_number(0, 6, 0, rgb = COLORS["red"])
             display_number(0, 6, -4, rgb = COLORS["red"])
 
@@ -197,17 +215,16 @@ while True:
                 raise ValueError
 
         except (ValueError, IndexError):
-            print("Error: can't decipher value later_feels_like = {}".format(later_feels_like))
+            print(f"Error: can't decipher value later_feels_like = {later_feels_like}")
             display_number(0, 12, 0, rgb = COLORS["red"])
             display_number(0, 12, -4, rgb = COLORS["red"])
-
 
     else:
         pprint(raw_request)
         exit(1)
 
     just_pressed = False
-    t = datetime.utcnow()
+    t = datetime.now(pytz.utc)
     sleep_time = REFRESH_INTERVAL - t.second
     for i in range(sleep_time * 20):
         saved_b = b_is_pressed
@@ -216,8 +233,12 @@ while True:
         saved_x = x_is_pressed
 
         time.sleep(TIME_DELAY)
-        if saved_x != x_is_pressed or saved_y != y_is_pressed \
-                or saved_a != a_is_pressed or saved_b != b_is_pressed:
+
+        x_bool = saved_x != x_is_pressed
+        y_bool = saved_y != y_is_pressed
+        a_bool = saved_a != a_is_pressed
+        b_bool = saved_b != b_is_pressed
+        if x_bool or y_bool or a_bool or b_bool:
             just_pressed = True
             break
 

@@ -4,3 +4,5 @@ unicorn-hat-sim
 gpiozero
 slack_sdk
 xmltodict
+RPi.GPIO
+pytz
