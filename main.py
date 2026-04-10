@@ -142,6 +142,7 @@ while True:
         clear_section(0, 4, 0, 6)
 
         # Display current temperature on top row
+        temp_int = 0
         try:
             temp_int = round(float(current_feels_like))
 
@@ -155,7 +156,7 @@ while True:
             elif 0 <= temp_int < 10:
                 display_number(int(str(temp_int)[0]), 0, -2)
 
-            elif 10 < temp_int < 100:
+            elif 10 <= temp_int < 100:
                 display_number(int(str(temp_int)[0]), 0, 0)
                 display_number(int(str(temp_int)[1]), 0, -4)
 
@@ -163,11 +164,12 @@ while True:
                 raise ValueError
 
         except (ValueError, IndexError):
-            print(f"Error: can't decipher value current_feels_like = {current_feels_like}")
+            print(f"Error: can't decipher value for top row: current_feels_like = {current_feels_like} - temp_int = {temp_int}")
             display_number(0, 0, 0, rgb = COLORS["red"])
             display_number(0, 0, -4, rgb = COLORS["red"])
 
         # Display expected temperature on 2nd row
+        temp_int = 0
         try:
             temp_int = round(float(expected_feels_like))
 
@@ -181,7 +183,7 @@ while True:
             elif 0 <= temp_int < 10:
                 display_number(int(str(temp_int)[0]), 6, -2)
 
-            elif 10 < temp_int < 100:
+            elif 10 <= temp_int < 100:
                 display_number(int(str(temp_int)[0]), 6, 0)
                 display_number(int(str(temp_int)[1]), 6, -4)
 
@@ -189,11 +191,12 @@ while True:
                 raise ValueError
 
         except (ValueError, IndexError):
-            print(f"Error: can't decipher value expected_feels_like = {expected_feels_like}")
+            print(f"Error: can't decipher value for 2nd row: expected_feels_like = {expected_feels_like} - temp_int = {temp_int}")
             display_number(0, 6, 0, rgb = COLORS["red"])
             display_number(0, 6, -4, rgb = COLORS["red"])
 
         # Display later temperature on 3rd row
+        temp_int = 0
         try:
             temp_int = round(float(later_feels_like))
 
@@ -207,7 +210,7 @@ while True:
             elif 0 <= temp_int < 10:
                 display_number(int(str(temp_int)[0]), 12, -2)
 
-            elif 10 < temp_int < 100:
+            elif 10 <= temp_int < 100:
                 display_number(int(str(temp_int)[0]), 12, 0)
                 display_number(int(str(temp_int)[1]), 12, -4)
 
@@ -215,7 +218,7 @@ while True:
                 raise ValueError
 
         except (ValueError, IndexError):
-            print(f"Error: can't decipher value later_feels_like = {later_feels_like}")
+            print(f"Error: can't decipher value for 3rd row: later_feels_like = {later_feels_like} - temp_int = {temp_int}")
             display_number(0, 12, 0, rgb = COLORS["red"])
             display_number(0, 12, -4, rgb = COLORS["red"])
 
